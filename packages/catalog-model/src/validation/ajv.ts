@@ -14,23 +14,46 @@
  * limitations under the License.
  */
 
-import Ajv, { Schema, ValidateFunction } from 'ajv';
+import Ajv, { ValidateFunction } from 'ajv';
+
+import apiV1 from '../schema/kinds/API.v1alpha1.schema.json';
+import componentV1 from '../schema/kinds/Component.v1alpha1.schema.json';
+import domainV1 from '../schema/kinds/Domain.v1alpha1.schema.json';
+import groupV1 from '../schema/kinds/Group.v1alpha1.schema.json';
+import locationV1 from '../schema/kinds/Location.v1alpha1.schema.json';
+import resourceV1 from '../schema/kinds/Resource.v1alpha1.schema.json';
+import systemV1 from '../schema/kinds/System.v1alpha1.schema.json';
+import userV1 from '../schema/kinds/User.v1alpha1.schema.json';
 import entitySchema from '../schema/Entity.schema.json';
 import entityEnvelopeSchema from '../schema/EntityEnvelope.schema.json';
 import entityMetaSchema from '../schema/EntityMeta.schema.json';
 import commonSchema from '../schema/shared/common.schema.json';
+
+const ajv = new Ajv({
+  allowUnionTypes: true,
+  allErrors: true,
+  validateSchema: true,
+  schemas: [
+    entityEnvelopeSchema,
+    entitySchema,
+    entityMetaSchema,
+    commonSchema,
+    apiV1,
+    componentV1,
+    domainV1,
+    groupV1,
+    locationV1,
+    resourceV1,
+    systemV1,
+    userV1,
+  ],
+});
 
 // A local cache of compiled schemas, to avoid duplicate work.
 // The keys are JSON stringified versions of the schema
 const compiledSchemaCache = new Map<string, ValidateFunction<unknown>>();
 
 // The core schemas that others can depend on
-const refDependencyCandidates = [
-  entityEnvelopeSchema,
-  entitySchema,
-  entityMetaSchema,
-  commonSchema,
-];
 
 export function throwAjvError(
   errors: ValidateFunction<unknown>['errors'],
@@ -54,7 +77,7 @@ export function throwAjvError(
 // Compiles the given schema, and makes sure to also grab any core dependencies
 // that it depends on
 export function compileAjvSchema(
-  schema: Schema,
+  schema: string,
   options: { disableCache?: boolean } = {},
 ): ValidateFunction<unknown> {
   const disableCache = options?.disableCache ?? false;
@@ -67,73 +90,14 @@ export function compileAjvSchema(
     }
   }
 
-  const extraSchemas = getExtraSchemas(schema);
-  const ajv = new Ajv({
-    allowUnionTypes: true,
-    allErrors: true,
-    validateSchema: true,
-  });
-  if (extraSchemas.length) {
-    ajv.addSchema(extraSchemas, undefined, undefined, true);
+  const compiled = ajv.getSchema(schema);
+  if (compiled === undefined) {
+    throw new Error(`Failed to find schema ${schema}`);
   }
-  const compiled = ajv.compile(schema);
 
   if (!disableCache) {
     compiledSchemaCache.set(cacheKey, compiled);
   }
 
   return compiled;
-}
-
-// Find refs in the given schema and recursively in all known schemas it
-// targets, collecting that list of schemas as we go
-function getExtraSchemas(schema: Schema): Schema[] {
-  if (typeof schema !== 'object') {
-    return [];
-  }
-
-  const seen = new Set<string>();
-  if (schema.$id) {
-    seen.add(schema.$id);
-  }
-
-  const selected = new Array<Schema>();
-
-  const todo: Schema[] = [schema];
-  while (todo.length) {
-    const current = todo.pop()!;
-
-    for (const ref of getAllRefs(current)) {
-      if (!seen.has(ref)) {
-        seen.add(ref);
-
-        const match = refDependencyCandidates.find(c => c.$id === ref);
-        if (match) {
-          selected.push(match);
-          todo.push(match);
-        }
-      }
-    }
-  }
-
-  return selected;
-}
-
-// Naively step through the entire schema looking for "$ref": "x" pairs. The
-// resulting iterator may contain duplicates. Ignores fragments, i.e. for a ref
-// of "a#b", it will just yield "a".
-function* getAllRefs(schema: Schema): Iterable<string> {
-  const todo: any[] = [schema];
-  while (todo.length) {
-    const current = todo.pop()!;
-    if (typeof current === 'object' && current) {
-      for (const [key, value] of Object.entries(current)) {
-        if (key === '$ref' && typeof value === 'string') {
-          yield value.split('#')[0];
-        } else {
-          todo.push(value);
-        }
-      }
-    }
-  }
 }

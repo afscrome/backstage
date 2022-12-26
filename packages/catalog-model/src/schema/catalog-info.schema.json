@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://backstage.io/schema/catalog-info.schema.json",
+  "title": "Backstage Entities",
+  "description": "",
+  "oneOf": [
+    {
+      "$ref": "./kinds/API.v1alpha1.schema.json"
+    },
+    {
+      "$ref": "./kinds/Component.v1alpha1.schema.json"
+    },
+    {
+      "$ref": "./kinds/Domain.v1alpha1.schema.json"
+    },
+    {
+      "$ref": "./kinds/Group.v1alpha1.schema.json"
+    },
+    {
+      "$ref": "./kinds/Location.v1alpha1.schema.json"
+    },
+    {
+      "$ref": "./kinds/Resource.v1alpha1.schema.json"
+    },
+    {
+      "$ref": "./kinds/System.v1alpha1.schema.json"
+    },
+    {
+      "$ref": "./kinds/User.v1alpha1.schema.json"
+    }
+  ]
+}

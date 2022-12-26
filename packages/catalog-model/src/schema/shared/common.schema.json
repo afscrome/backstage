@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "common",
+  "$id": "https://backstage.io/schema/shared/common.schema.json",
   "type": "object",
   "description": "Common definitions to import from other schemas",
   "definitions": {
@@ -29,7 +29,6 @@
       }
     },
     "relation": {
-      "$id": "#relation",
       "type": "object",
       "description": "A directed relation from one entity to another.",
       "required": ["type", "target"],
@@ -42,7 +41,7 @@
           "description": "The type of relation."
         },
         "target": {
-          "$ref": "#reference"
+          "$ref": "#/definitions/reference"
         },
         "targetRef": {
           "type": "string",
@@ -52,7 +51,6 @@
       }
     },
     "status": {
-      "$id": "#status",
       "type": "object",
       "description": "The current status of the entity, as claimed by various sources.",
       "required": [],
@@ -61,13 +59,12 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#statusItem"
+            "$ref": "#/definitions/statusItem"
           }
         }
       }
     },
     "statusItem": {
-      "$id": "#statusItem",
       "type": "object",
       "description": "A specific status item on a well known format.",
       "required": ["type", "level", "message"],
@@ -78,7 +75,7 @@
           "minLength": 1
         },
         "level": {
-          "$ref": "#statusLevel",
+          "$ref": "#/definitions/statusLevel",
           "description": "The status level / severity of the status item."
         },
         "message": {
@@ -86,13 +83,12 @@
           "description": "A brief message describing the status, intended for human consumption."
         },
         "error": {
-          "$ref": "#error",
+          "$ref": "#/definitions/error",
           "description": "An optional serialized error object related to the status."
         }
       }
     },
     "statusLevel": {
-      "$id": "#statusLevel",
       "type": "string",
       "description": "A status level / severity.",
       "enum": ["info", "warning", "error"]

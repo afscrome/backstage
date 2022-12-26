@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "Entity",
+  "$id": "https://backstage.io/schema/Entity.schema.json",
   "description": "The parts of the format that's common to all versions/kinds of entity.",
   "examples": [
     {
@@ -30,41 +30,30 @@
     "apiVersion": {
       "type": "string",
       "description": "The version of specification format for this particular entity that this is written against.",
-      "minLength": 1,
-      "examples": ["backstage.io/v1alpha1", "my-company.net/v1", "1.0"]
+      "minLength": 1
     },
     "kind": {
       "type": "string",
       "description": "The high level entity type being described.",
-      "minLength": 1,
-      "examples": [
-        "API",
-        "Component",
-        "Domain",
-        "Group",
-        "Location",
-        "Resource",
-        "System",
-        "Template",
-        "User"
-      ]
+      "minLength": 1
     },
     "metadata": {
-      "$ref": "EntityMeta"
+      "$ref": "./EntityMeta.schema.json"
     },
     "spec": {
       "type": "object",
-      "description": "The specification data describing the entity itself."
+      "description": "The specification data describing the entity itself.",
+      "additionalProperties": true
     },
     "relations": {
       "type": "array",
       "description": "The relations that this entity has with other entities.",
       "items": {
-        "$ref": "common#relation"
+        "$ref": "./shared/common.schema.json#/definitions/relation"
       }
     },
     "status": {
-      "$ref": "common#status"
+      "$ref": "./shared/common.schema.json#/definitions/status"
     }
   }
 }

@@ -61,9 +61,9 @@ import { compileAjvSchema, throwAjvError } from './ajv';
  * @public
  */
 export function entityKindSchemaValidator<T extends Entity>(
-  schema: unknown,
+  schema: string,
 ): (data: unknown) => T | false {
-  const validate = compileAjvSchema(schema as Schema);
+  const validate = compileAjvSchema(schema);
 
   return data => {
     const result = validate(data);

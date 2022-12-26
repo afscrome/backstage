@@ -15,10 +15,11 @@
  */
 
 import { entityKindSchemaValidator } from './entityKindSchemaValidator';
-import componentSchema from '../schema/kinds/Component.v1alpha1.schema.json';
 
 describe('entityKindSchemaValidator', () => {
-  const validator = entityKindSchemaValidator(componentSchema);
+  const validator = entityKindSchemaValidator(
+    'https://backstage.io/schema/kinds/ComponentV1alpha1.schema.json',
+  );
   let entity: any;
 
   beforeEach(() => {

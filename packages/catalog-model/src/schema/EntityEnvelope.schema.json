@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "EntityEnvelope",
+  "$id": "https://backstage.io/schema/EntityEnvelope.schema.json",
   "description": "The envelope skeleton parts of an entity - whatever is necessary to be able to give it a ref and pass to further validation / policy checking.",
   "examples": [
     {
@@ -18,8 +18,7 @@
     "apiVersion": {
       "type": "string",
       "description": "The version of specification format for this particular entity that this is written against.",
-      "minLength": 1,
-      "examples": ["backstage.io/v1alpha1", "my-company.net/v1", "1.0"]
+      "minLength": 1
     },
     "kind": {
       "type": "string",
@@ -45,14 +44,12 @@
         "name": {
           "type": "string",
           "description": "The name of the entity. Must be unique within the catalog at any given point in time, for any given namespace + kind pair.",
-          "examples": ["metadata-proxy"],
           "minLength": 1
         },
         "namespace": {
           "type": "string",
           "description": "The namespace that the entity belongs to.",
           "default": "default",
-          "examples": ["default", "admin"],
           "minLength": 1
         }
       }

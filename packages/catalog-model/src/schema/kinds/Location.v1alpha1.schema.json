@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "LocationV1alpha1",
+  "$id": "https://backstage.io/schema/kinds/LocationV1alpha1.schema.json",
   "description": "A location is a marker that references other places to look for catalog data.",
   "examples": [
     {
@@ -20,7 +20,7 @@
   ],
   "allOf": [
     {
-      "$ref": "Entity"
+      "$ref": "../Entity.schema.json"
     },
     {
       "type": "object",
@@ -45,7 +45,6 @@
             "target": {
               "type": "string",
               "description": "A single target as a string. Can be either an absolute path/URL (depending on the type), or a relative path such as ./details/catalog-info.yaml which is resolved relative to the location of this Location entity itself.",
-              "examples": ["./details/catalog-info.yaml"],
               "minLength": 1
             },
             "targets": {
@@ -64,7 +63,6 @@
               "type": "string",
               "description": "Whether the presence of the location target is required and it should be considered an error if it can not be found",
               "default": "required",
-              "examples": ["required"],
               "enum": ["required", "optional"]
             }
           }

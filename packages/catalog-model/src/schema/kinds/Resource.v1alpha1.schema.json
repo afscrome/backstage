@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "ResourceV1alpha1",
+  "$id": "https://backstage.io/schema/kinds/ResourceV1alpha1.schema.json",
   "description": "A resource describes the infrastructure a system needs to operate, like BigTable databases, Pub/Sub topics, S3 buckets or CDNs. Modelling them together with components and systems allows to visualize resource footprint, and create tooling around them.",
   "examples": [
     {
@@ -19,7 +19,7 @@
   ],
   "allOf": [
     {
-      "$ref": "Entity"
+      "$ref": "../Entity.schema.json"
     },
     {
       "type": "object",
@@ -44,7 +44,6 @@
             "owner": {
               "type": "string",
               "description": "An entity reference to the owner of the resource.",
-              "examples": ["artist-relations-team", "user:john.johnson"],
               "minLength": 1
             },
             "dependsOn": {

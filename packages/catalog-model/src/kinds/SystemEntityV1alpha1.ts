@@ -16,7 +16,6 @@
 
 import type { Entity } from '../entity/Entity';
 import { ajvCompiledJsonSchemaValidator } from './util';
-import schema from '../schema/kinds/System.v1alpha1.schema.json';
 
 /**
  * Backstage catalog System kind Entity. Systems group Components, Resources and APIs together.
@@ -41,5 +40,6 @@ export interface SystemEntityV1alpha1 extends Entity {
  *
  * @public
  */
-export const systemEntityV1alpha1Validator =
-  ajvCompiledJsonSchemaValidator(schema);
+export const systemEntityV1alpha1Validator = ajvCompiledJsonSchemaValidator(
+  'https://backstage.io/schema/kinds/SystemV1alpha1.schema.json',
+);

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "DomainV1alpha1",
+  "$id": "https://backstage.io/schema/kinds/DomainV1alpha1.schema.json",
   "description": "A Domain groups a collection of systems that share terminology, domain models, business purpose, or documentation, i.e. form a bounded context.",
   "examples": [
     {
@@ -17,7 +17,7 @@
   ],
   "allOf": [
     {
-      "$ref": "Entity"
+      "$ref": "../Entity.schema.json"
     },
     {
       "type": "object",
@@ -36,7 +36,6 @@
             "owner": {
               "type": "string",
               "description": "An entity reference to the owner of the component.",
-              "examples": ["artist-relations-team", "user:john.johnson"],
               "minLength": 1
             }
           }

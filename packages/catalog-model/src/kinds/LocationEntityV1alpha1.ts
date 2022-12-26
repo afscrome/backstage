@@ -15,7 +15,6 @@
  */
 
 import type { Entity } from '../entity/Entity';
-import schema from '../schema/kinds/Location.v1alpha1.schema.json';
 import { ajvCompiledJsonSchemaValidator } from './util';
 
 /**
@@ -39,5 +38,6 @@ export interface LocationEntityV1alpha1 extends Entity {
  *
  * @public
  */
-export const locationEntityV1alpha1Validator =
-  ajvCompiledJsonSchemaValidator(schema);
+export const locationEntityV1alpha1Validator = ajvCompiledJsonSchemaValidator(
+  'https://backstage.io/schema/kinds/LocationV1alpha1.schema.json',
+);

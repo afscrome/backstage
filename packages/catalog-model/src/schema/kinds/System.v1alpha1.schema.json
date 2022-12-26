@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "SystemV1alpha1",
+  "$id": "https://backstage.io/schema/kinds/SystemV1alpha1.schema.json",
   "description": "A system is a collection of resources and components. The system may expose or consume one or several APIs. It is viewed as abstraction level that provides potential consumers insights into exposed features without needing a too detailed view into the details of all components. This also gives the owning team the possibility to decide about published artifacts and APIs.",
   "examples": [
     {
@@ -18,7 +18,7 @@
   ],
   "allOf": [
     {
-      "$ref": "Entity"
+      "$ref": "../Entity.schema.json"
     },
     {
       "type": "object",
@@ -37,13 +37,11 @@
             "owner": {
               "type": "string",
               "description": "An entity reference to the owner of the component.",
-              "examples": ["artist-relations-team", "user:john.johnson"],
               "minLength": 1
             },
             "domain": {
               "type": "string",
               "description": "An entity reference to the domain that the system belongs to.",
-              "examples": ["artists"],
               "minLength": 1
             }
           }

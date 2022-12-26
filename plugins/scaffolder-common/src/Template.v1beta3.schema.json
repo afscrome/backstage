@@ -61,7 +61,7 @@
   ],
   "allOf": [
     {
-      "$ref": "Entity"
+      "$ref": "../Entity.schema.json"
     },
     {
       "type": "object",
@@ -71,7 +71,7 @@
           "enum": ["scaffolder.backstage.io/v1beta3"]
         },
         "kind": {
-          "enum": ["Template"]
+          "const": "Template"
         },
         "spec": {
           "type": "object",
@@ -149,25 +149,22 @@
                       "url": {
                         "type": "string",
                         "description": "A url in a standard uri format.",
-                        "examples": ["https://github.com/my-org/my-new-repo"],
+                        "format": "uri",
                         "minLength": 1
                       },
                       "entityRef": {
                         "type": "string",
                         "description": "An entity reference to an entity in the catalog.",
-                        "examples": ["Component:default/my-app"],
                         "minLength": 1
                       },
                       "title": {
                         "type": "string",
                         "description": "A user friendly display name for the link.",
-                        "examples": ["View new repo"],
                         "minLength": 1
                       },
                       "icon": {
                         "type": "string",
                         "description": "A key representing a visual icon to be displayed in the UI.",
-                        "examples": ["dashboard"],
                         "minLength": 1
                       }
                     }

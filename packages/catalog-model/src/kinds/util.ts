@@ -21,7 +21,7 @@ import { KindValidator } from './types';
 // just export the inner validator directly. However, all of the already
 // exported kind validators have the `KindValidator` signature which is
 // different. So let's postpone that change until a later time.
-export function ajvCompiledJsonSchemaValidator(schema: unknown): KindValidator {
+export function ajvCompiledJsonSchemaValidator(schema: string): KindValidator {
   let validator: undefined | ((data: unknown) => any);
   return {
     async check(data) {
